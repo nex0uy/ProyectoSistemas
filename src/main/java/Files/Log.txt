@@ -1,0 +1,12 @@
+27/05/2022 00:37:38 | Executing InitialLoad.LoadRestaurant | Reloj: 1
+27/05/2022 00:37:38 | Executing InitialLoad.LoadOrders | Reloj: 1
+27/05/2022 00:37:38 | Executing InitialLoad.LoadCustomers | Reloj: 1
+27/05/2022 00:37:38 | Executing InitialLoad.loadFile in path: src/main/java/Files/Customers.csv | Reloj: 1
+27/05/2022 00:37:38 | File in path: src/main/java/Files/Customers.csv , loaded successful | Reloj: 1
+27/05/2022 00:37:38 | 1000 customers loaded successful | Reloj: 1
+27/05/2022 00:37:38 | Executing InitialLoad.loadFile in path: src/main/java/Files/Orders.csv | Reloj: 1
+27/05/2022 00:37:38 | File in path: src/main/java/Files/Orders.csv , loaded successful | Reloj: 1
+27/05/2022 00:37:38 | 1000 orders loaded successful | Reloj: 1
+27/05/2022 00:37:38 | Executing InitialLoad.loadFile in path: src/main/java/Files/Restaurant.csv | Reloj: 1
+27/05/2022 00:37:38 | File in path: src/main/java/Files/Restaurant.csv , loaded successful | Reloj: 1
+27/05/2022 00:37:38 | 500 restaurant loaded successful | Reloj: 1
