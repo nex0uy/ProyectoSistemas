@@ -135,7 +135,7 @@ public class InitialLoad extends Thread{
             System.out.println("Error loading customers");
             e.printStackTrace();
         }
-        this.logger.addLine(String.format("%s customers loaded successful", result.size()));
+        this.logger.addLine(String.format("%s customers loaded successful ", result.size()));
         return result;
     }
     
