@@ -1,43 +1,48 @@
 package Models;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.concurrent.Semaphore;
 
 /**
  *
  * @author germanpujadas
  */
-public class Restaurant extends Thread{
+public class Restaurant extends Thread {
 
-    public int rut;
     public int restaurantId;
     public LinkedList<Order> pendingOrders;
     public LinkedList<Order> priorityOrders;
-    public LinkedList<Order> readyOrders;
     int maxTimeInQueue = 3;
-    Instant lastProducedNonPriorityOrder = null;
+    Instant lastProducedNonPriorityOrder;
+    static Semaphore semRest;
+    static Semaphore semDelivery;
 
     public Restaurant(
-            int rut, int restaurantId) {
-        this.rut = rut;
+            int restaurantId, int restCapacity, int delCapacity) {
         this.restaurantId = restaurantId;
         this.pendingOrders = new LinkedList<Order>();
         this.priorityOrders = new LinkedList<Order>();
-        this.readyOrders = new LinkedList<Order>();
+        this.semRest = new Semaphore(restCapacity);
+        this.semDelivery = new Semaphore(delCapacity);
+        this.lastProducedNonPriorityOrder = Instant.now();
     }
 
-    Boolean AddNewOrder(Order order) {
-        return order.customer.membership
-                ? priorityOrders.add(order) : pendingOrders.add(order);
+    public Boolean AddNewOrder(Order order) {
+        Boolean result = false;
+        try {
+            this.semRest.acquire();
+            result = order.customer.membership
+                    ? priorityOrders.add(order) : pendingOrders.add(order);
+        } catch (InterruptedException ex) {
+        }
+        this.semDelivery.release();
+        return result;
     }
 
     Order GetNextOrder() {
-        long minutesElapsed = ChronoUnit.MINUTES.between(this.lastProducedNonPriorityOrder, Instant.now());
+                        long minutesElapsed = ChronoUnit.MINUTES.between(this.lastProducedNonPriorityOrder, Instant.now());
         if (this.pendingOrders.size() > 0
                 && minutesElapsed > this.maxTimeInQueue) {
             return this.pendingOrders.removeFirst();
@@ -55,12 +60,19 @@ public class Restaurant extends Thread{
     }
 
     public void makeNextOrder() {
-        var nextOrder = this.GetNextOrder();
-        this.readyOrders.add(nextOrder);
+        try {
+            var nextOrder = this.GetNextOrder();
+            if (nextOrder != null && !nextOrder.customer.membership) {
+                this.semDelivery.acquire();
+                this.lastProducedNonPriorityOrder = Instant.now();
+                this.semRest.release();
+            }
+        } catch (InterruptedException ex) {
+        }
     }
-    
+
     @Override
     public void run() {
-        
+        this.makeNextOrder();
     }
 }

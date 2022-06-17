@@ -17,7 +17,7 @@ import java.util.LinkedList;
  *
  * @author germanpujadas
  */
-public class InitialLoad extends Thread{
+public class InitialLoad {
 
     private Logger logger = new Logger();
     LinkedList<Restaurant> restarurants = new LinkedList<Restaurant>();
@@ -68,11 +68,11 @@ public class InitialLoad extends Thread{
                 var _restaurantLine = restaurant.split(",");
                 var _restaurant = new Restaurant(
                         Integer.parseInt(_restaurantLine[0]),
-                        Integer.parseInt(_restaurantLine[1]));
+                        2, //Capacidad de proceso del restaurante
+                        2); //# de deliveries contratados
                 restarurants.add(_restaurant);
             }
         } catch (Exception e) {
-
             this.logger.addLine("Error loading restaurants");
             e.printStackTrace();
         }
@@ -137,12 +137,5 @@ public class InitialLoad extends Thread{
         }
         this.logger.addLine(String.format("%s customers loaded successful", result.size()));
         return result;
-    }
-    
-    @Override
-    public void run() {
-            for (Restaurant res : restarurants) {
-                res.start();
-            }
     }
 }
