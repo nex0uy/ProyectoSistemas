@@ -1,13 +1,9 @@
 package Models;
 
-/**
- *
- * @author germanpujadas
- */
 public class Customer {
 
-    public int id;
-    public Boolean membership;
+    public int id; //Id de cliente
+    public Boolean membership; //Indica si el cliente tiene membresía
 
     public Customer(
             int id, Boolean membership) {

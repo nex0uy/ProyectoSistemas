@@ -10,16 +10,11 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- *
- * @author germanpujadas
- */
 public class Logger {
-
-    private static final Logger logger = new Logger();
-    private final String logPath = "src/main/java/Files/Log.txt";
+    private final String logPath = "src/main/java/Files/Log.txt"; //Ruta destino del archivo
     private final Queue<String> logLines = new LinkedList<String>();
     
+    //Genera una nueva línea y la guarda en el archivo de log
     public void addLine(String input) {
         synchronized (logLines) {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -29,6 +24,7 @@ public class Logger {
         }
     }
 
+    //Guarda línea
     public void save() {
         synchronized (logLines) {
             try ( BufferedWriter writer = new BufferedWriter(new FileWriter(logPath, true));) {

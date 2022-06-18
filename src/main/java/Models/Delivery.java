@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
-/**
- *
- * @author Sombra
- */
 public class Delivery extends Thread {
 
-    public Deposit deposito;
-    public int deliveryId;
+    public Deposit deposito; //Depósito al cual el delivery irá a buscar
+    public int deliveryId; //Id del delivery
 
     public Delivery(int deliveryId, Deposit deposito) {
         this.deposito = deposito;
@@ -21,7 +13,7 @@ public class Delivery extends Thread {
     @Override
     public void run() {
         while (true) {
-            deposito.despacharOrden(this);
+            deposito.deliverOrder(this); //El delivery va a buscar un pedido
         }
     }
 }

@@ -1,59 +1,61 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
 import Common.Watch;
+import Helpers.Logger;
 import java.util.LinkedList;
 import java.util.concurrent.Semaphore;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- *
- * @author Sombra
- */
 public class Deposit {
 
-    private final int MAX_LIMITE = 2;
-    private Semaphore semRest = new Semaphore(MAX_LIMITE);
-    Semaphore semDelivery = new Semaphore(0);
-    private Semaphore mutex = new Semaphore(1);
+    private static final Logger logger = new Helpers.Logger(); //Instancia de logger
+    private final int MAX_LIMITE = 2; //Indica la cantidad máxima de peidos que pueden haber
+    private Semaphore semRest = new Semaphore(MAX_LIMITE); //Intancia semáforo para restaurant
+    Semaphore semDelivery = new Semaphore(0); //Intancia semáforo para delivery
+    private Semaphore mutex = new Semaphore(1); //Instancia de semáforo para exclusión mutua
     private LinkedList<Order> listaOrdenes = new LinkedList<Order>();
-
-    public void agregarOrden(Order order) {
+    
+    //Agregar pedido para ser depachada
+    public void addOrder(Order order) {
         try {
-            semRest.acquire();
-            mutex.acquire();
+            semRest.acquire(); //Tomo el semáforo del restaurant
+            mutex.acquire(); //Tomo el semáforo del depósito
             listaOrdenes.add(order);
-            System.out.println("Pedido nro. " + order.orderId + "del momento "+ order.moment +" ha quedado pronto para ser despachado");
-            mutex.release();
+            var message = "Pedido nro. " + order.orderId + "del momento "+ order.moment +" ha quedado pronto para ser despachado";
+            System.out.println(message);
+            this.logger.addLine(message);
+            mutex.release(); //Libero semáforo del depósito
 
             Thread.sleep(500);
 
         } catch (InterruptedException ex) {
-            Logger.getLogger(Deposit.class.getName()).log(Level.SEVERE, null, ex);
+            this.logger.addLine(ex.getMessage());
+            ex.printStackTrace();
         } finally {
-            semDelivery.release();
+            semDelivery.release(); //Libero semáforo del delivery
         }
 
     }
 
-    public void despacharOrden(Delivery delivery) {
-        System.out.println("El delivery " + delivery.deliveryId + " llega al deposito");
+    //Entrega pedido a cliente
+    public void deliverOrder(Delivery delivery) {
+        var message = "El delivery " + delivery.deliveryId + " llega al deposito";
+        System.out.println(message);
+        this.logger.addLine(message);
         try {
 
-            semDelivery.acquire();
-            mutex.acquire();
+            semDelivery.acquire(); //Tomo semáforo del delivery
+            mutex.acquire(); //Tomo el semáforo del depósito
             Order orden = this.listaOrdenes.removeFirst();
-            System.out.println("La orden nro. " + orden.orderId + " del momento "+ orden.moment + " ha sido retirada por el delivery " + delivery.deliveryId + " en el momento " + Watch.getWatch().getCounter());
-            mutex.release();
+            message = "La orden nro. " + orden.orderId + " del momento "+ orden.moment + " ha sido retirada por el delivery " + delivery.deliveryId + " en el momento " + Watch.getWatch().getCounter();
+            System.out.println(message);
+            this.logger.addLine(message);
+            mutex.release(); //Libero semáforo del depósito
             Thread.sleep(500);
         } catch (InterruptedException ex) {
-            Logger.getLogger(Deposit.class.getName()).log(Level.SEVERE, null, ex);
+            this.logger.addLine(ex.getMessage());
+            ex.printStackTrace();
         } finally {
-            semRest.release();
+            semRest.release(); //Libero semáforo del restaurant
         }
     }
 }

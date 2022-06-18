@@ -14,14 +14,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-/**
- *
- * @author germanpujadas
- */
 public class InitialLoad {
 
-    private Logger logger = new Logger();
-    LinkedList<Restaurant> restarurants = new LinkedList<Restaurant>();
+    private final Logger logger = new Logger();
+    LinkedList<Restaurant> restarurants = new LinkedList<>();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     /**
@@ -57,11 +53,10 @@ public class InitialLoad {
 
     /**
      * @param restaurantPath
-     * @param ordersPath
-     * @param customersPath
+     * @param deposit
      * @return List of restaurants
      */
-    public LinkedList<Restaurant> LoadRestaurant(String restaurantPath, Deposit deposito) {
+    public LinkedList<Restaurant> LoadRestaurant(String restaurantPath, Deposit deposit) {
         this.logger.addLine(String.format("Executing InitialLoad.LoadRestaurant"));
         try {
             String[] restaurantLines = loadFile(restaurantPath);
@@ -70,7 +65,7 @@ public class InitialLoad {
                 var _restaurant = new Restaurant(
                         Integer.parseInt(
                                 _restaurantLine[0]),
-                        deposito);
+                        deposit);
                 restarurants.add(_restaurant);
             }
         } catch (Exception e) {
@@ -95,7 +90,7 @@ public class InitialLoad {
             String[] orderLines = loadFile(ordersPath);
             for (var order : orderLines) {
                 var _orderLine = order.split(",");
-                var _customer = customers.stream()
+                var _customer = customers.stream() //Toma los clientes de la lista "customers" que se correponden al cliente del pedido
                         .filter(customer -> customer.id == Integer.parseInt(_orderLine[1]))
                         .findFirst()
                         .get();
@@ -109,10 +104,12 @@ public class InitialLoad {
             }
         } catch (Exception e) {
 
-            System.out.println("Error loading orders");
+            var message = "Error loading orders";
+            System.out.println(message);
+            this.logger.addLine(message);
             e.printStackTrace();
         }
-        this.logger.addLine(String.format("%s orders loaded successful", result.size()));
+            this.logger.addLine(String.format("%s orders loaded successful", result.size()));
         return result;
     }
 
@@ -134,7 +131,9 @@ public class InitialLoad {
             }
         } catch (Exception e) {
 
-            System.out.println("Error loading customers");
+            var message = "Error loading customers";
+            System.out.println(message);
+            this.logger.addLine(message);
             e.printStackTrace();
         }
         this.logger.addLine(String.format("%s customers loaded successful", result.size()));

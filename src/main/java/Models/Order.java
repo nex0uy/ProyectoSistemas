@@ -2,17 +2,13 @@ package Models;
 
 import java.time.LocalDateTime;
 
-/**
- *
- * @author germanpujadas
- */
 public class Order {
 
-    public int orderId;
-    public Customer customer;
-    public int restaurantId;
-    public LocalDateTime orderTime;
-    public int moment;
+    public int orderId; //Número de pedido
+    public Customer customer; //Cliente del pedido
+    public int restaurantId; //Id del restaurant
+    public LocalDateTime orderTime; //Hora de realización del pedido
+    public int moment; //Momento en el que se realiza el pedido
 
     public Order(
             int orderId, Customer customer, int restaurantId, LocalDateTime orderTime, int moment) {
