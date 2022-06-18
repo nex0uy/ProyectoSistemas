@@ -1,0 +1,39 @@
+18/06/2022 15:11:42 | Executing InitialLoad.LoadRestaurant | Reloj: 0
+18/06/2022 15:11:42 | Executing InitialLoad.loadFile in path: src/main/java/Files/Restaurant_TEST.csv | Reloj: 0
+18/06/2022 15:11:42 | File in path: src/main/java/Files/Restaurant_TEST.csv , loaded successful | Reloj: 0
+18/06/2022 15:11:42 | 2 restaurant loaded successful | Reloj: 0
+18/06/2022 15:11:42 | Executing InitialLoad.LoadOrders | Reloj: 0
+18/06/2022 15:11:42 | Executing InitialLoad.LoadCustomers | Reloj: 0
+18/06/2022 15:11:42 | Executing InitialLoad.loadFile in path: src/main/java/Files/Customers_TEST.csv | Reloj: 0
+18/06/2022 15:11:42 | File in path: src/main/java/Files/Customers_TEST.csv , loaded successful | Reloj: 0
+18/06/2022 15:11:42 | 3 customers loaded successful | Reloj: 0
+18/06/2022 15:11:42 | Executing InitialLoad.loadFile in path: src/main/java/Files/Orders_TEST.csv | Reloj: 0
+18/06/2022 15:11:42 | File in path: src/main/java/Files/Orders_TEST.csv , loaded successful | Reloj: 0
+18/06/2022 15:11:42 | 4 orders loaded successful | Reloj: 0
+18/06/2022 15:11:42 | El delivery 0 llega al deposito | Reloj: 0
+18/06/2022 15:11:42 | El delivery 1 llega al deposito | Reloj: 0
+18/06/2022 15:11:42 | El delivery 2 llega al deposito | Reloj: 0
+18/06/2022 15:11:42 | El delivery 3 llega al deposito | Reloj: 0
+18/06/2022 15:11:42 | El delivery 4 llega al deposito | Reloj: 0
+18/06/2022 15:11:42 | El delivery 5 llega al deposito | Reloj: 0
+18/06/2022 15:11:42 | El delivery 6 llega al deposito | Reloj: 0
+18/06/2022 15:11:42 | El delivery 7 llega al deposito | Reloj: 0
+18/06/2022 15:11:42 | El delivery 8 llega al deposito | Reloj: 0
+18/06/2022 15:11:42 | El delivery 9 llega al deposito | Reloj: 0
+18/06/2022 15:11:48 | Inicia el momento: 1 | Reloj: 1
+18/06/2022 15:11:48 | Pedido nro. 1del momento 1 ha quedado pronto para ser despachado | Reloj: 1
+18/06/2022 15:11:48 | La orden nro. 1 del momento 1 ha sido retirada por el delivery 0 en el momento 1 | Reloj: 1
+18/06/2022 15:11:48 | Pedido nro. 2del momento 1 ha quedado pronto para ser despachado | Reloj: 1
+18/06/2022 15:11:49 | El delivery 0 llega al deposito | Reloj: 1
+18/06/2022 15:11:49 | La orden nro. 2 del momento 1 ha sido retirada por el delivery 1 en el momento 1 | Reloj: 1
+18/06/2022 15:11:49 | El delivery 1 llega al deposito | Reloj: 1
+18/06/2022 15:11:54 | Inicia el momento: 2 | Reloj: 2
+18/06/2022 15:12:00 | Inicia el momento: 3 | Reloj: 3
+18/06/2022 15:12:06 | Inicia el momento: 4 | Reloj: 4
+18/06/2022 15:12:06 | Pedido nro. 3del momento 4 ha quedado pronto para ser despachado | Reloj: 4
+18/06/2022 15:12:06 | Pedido nro. 4del momento 4 ha quedado pronto para ser despachado | Reloj: 4
+18/06/2022 15:12:06 | La orden nro. 3 del momento 4 ha sido retirada por el delivery 2 en el momento 4 | Reloj: 4
+18/06/2022 15:12:06 | La orden nro. 4 del momento 4 ha sido retirada por el delivery 3 en el momento 4 | Reloj: 4
+18/06/2022 15:12:07 | El delivery 3 llega al deposito | Reloj: 4
+18/06/2022 15:12:07 | El delivery 2 llega al deposito | Reloj: 4
+18/06/2022 15:12:12 | Inicia el momento: 5 | Reloj: 5

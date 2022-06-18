@@ -19,7 +19,7 @@ public class Logger {
         synchronized (logLines) {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date date = new Date();
-            logLines.add(dateFormat.format(date) + " | " + input + " | Reloj: " + Watch.getWatch().getCounter() + "\n");
+            logLines.add(dateFormat.format(date) + " | " + input + " | Momento: " + Watch.getWatch().getCounter() + "\n");
             this.save();
         }
     }
