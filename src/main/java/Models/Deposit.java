@@ -20,7 +20,7 @@ public class Deposit {
             semRest.acquire(); //Tomo el semáforo del restaurant
             mutex.acquire(); //Tomo el semáforo del depósito
             listaOrdenes.add(order);
-            var message = "Pedido nro. " + order.orderId + "del momento "+ order.moment +" ha quedado pronto para ser despachado";
+            var message = "Pedido nro. " + order.orderId + " del momento "+ order.moment +" ha quedado pronto para ser despachado";
             System.out.println(message);
             this.logger.addLine(message);
             mutex.release(); //Libero semáforo del depósito
@@ -46,7 +46,7 @@ public class Deposit {
             semDelivery.acquire(); //Tomo semáforo del delivery
             mutex.acquire(); //Tomo el semáforo del depósito
             Order orden = this.listaOrdenes.removeFirst();
-            message = "La orden nro. " + orden.orderId + " del momento "+ orden.moment + " ha sido retirada por el delivery " + delivery.deliveryId + " en el momento " + Watch.getWatch().getCounter();
+            message = "La orden nro. " + orden.orderId + " del momento "+ orden.moment + " de caracter " + (orden.customer.membership ? "prioritario" : "no prioritario") + " ha sido retirada por el delivery " + delivery.deliveryId + " en el momento " + Watch.getWatch().getCounter();
             System.out.println(message);
             this.logger.addLine(message);
             mutex.release(); //Libero semáforo del depósito
