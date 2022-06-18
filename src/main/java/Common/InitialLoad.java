@@ -2,6 +2,7 @@ package Common;
 
 import Helpers.Logger;
 import Models.Customer;
+import Models.Deposit;
 import Models.Order;
 import Models.Restaurant;
 import java.io.BufferedReader;
@@ -60,16 +61,19 @@ public class InitialLoad {
      * @param customersPath
      * @return List of restaurants
      */
-    public LinkedList<Restaurant> LoadRestaurant(String restaurantPath, String ordersPath, String customersPath) {
+    public LinkedList<Restaurant> LoadRestaurant(String restaurantPath, String ordersPath, String customersPath,Deposit deposito) {
         this.logger.addLine(String.format("Executing InitialLoad.LoadRestaurant"));
         try {
+            var orders = LoadOrders(ordersPath, customersPath);
             String[] restaurantLines = loadFile(restaurantPath);
             for (var restaurant : restaurantLines) {
                 var _restaurantLine = restaurant.split(",");
                 var _restaurant = new Restaurant(
-                        Integer.parseInt(_restaurantLine[0]),
-                        2, //Capacidad de proceso del restaurante
-                        2); //# de deliveries contratados
+                        Integer.parseInt(
+                                _restaurantLine[0]),
+                                deposito);
+                orders.stream().filter(ord -> ord.restaurantId == Integer.parseInt(_restaurantLine[0]))
+                               .forEach(ord -> _restaurant.AddNewOrder(ord));
                 restarurants.add(_restaurant);
             }
         } catch (Exception e) {
@@ -127,7 +131,7 @@ public class InitialLoad {
                 var _customerLine = customerLine.split(",");
                 var _customer = new Customer(
                         Integer.parseInt(_customerLine[0]),
-                        Boolean.parseBoolean(_customerLine[1]));
+                        _customerLine[1].equals("1"));
                 result.add(_customer);
             }
         } catch (Exception e) {

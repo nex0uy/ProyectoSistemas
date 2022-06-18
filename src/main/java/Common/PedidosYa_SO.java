@@ -1,5 +1,7 @@
 package Common;
 
+import Models.Delivery;
+import Models.Deposit;
 import Models.Order;
 import java.util.List;
 import java.util.Map;
@@ -14,18 +16,17 @@ public class PedidosYa_SO {
     public static void main(String[] args) {
         var loader = new InitialLoad();
         String basePath = "src/main/java/Files/";
+        Deposit deposito = new Deposit();
         var restaurants = loader.LoadRestaurant(basePath+"Restaurant_TEST.csv",
                                                 basePath+"Orders_TEST.csv",
-                                                basePath+"Customers_TEST.csv");
+                                                basePath+"Customers_TEST.csv",
+                                                deposito);
         
-        var orders = loader.LoadOrders(basePath+"Orders_TEST.csv",
-                                       basePath+"Customers_TEST.csv");
+        restaurants.stream().forEach(rest -> rest.start());
         
-        Map<Integer, List<Order>> groupedList =
-                        orders.stream().collect(Collectors.groupingBy(order -> order.restaurantId));
-        restaurants.stream().forEach(rest -> rest.run());
-        restaurants.stream().forEach(rest -> groupedList.get(rest.restaurantId)
-                                                        .stream().forEach(ord -> rest.AddNewOrder(ord)));
+        for (int i = 0; i < 12; i++) {
+            new Delivery(i, deposito).start();
+        }
         var a = "";
     }
 }

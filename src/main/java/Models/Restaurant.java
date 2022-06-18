@@ -16,28 +16,23 @@ public class Restaurant extends Thread {
     public LinkedList<Order> priorityOrders;
     int maxTimeInQueue = 3;
     Instant lastProducedNonPriorityOrder;
-    static Semaphore semRest;
-    static Semaphore semDelivery;
+    
+    public Deposit deposito;
 
     public Restaurant(
-            int restaurantId, int restCapacity, int delCapacity) {
+            int restaurantId, Deposit deposito) {
         this.restaurantId = restaurantId;
         this.pendingOrders = new LinkedList<Order>();
         this.priorityOrders = new LinkedList<Order>();
-        this.semRest = new Semaphore(restCapacity);
-        this.semDelivery = new Semaphore(delCapacity);
         this.lastProducedNonPriorityOrder = Instant.now();
+        this.deposito = deposito;
     }
 
     public Boolean AddNewOrder(Order order) {
         Boolean result = false;
-        try {
-            this.semRest.acquire();
             result = order.customer.membership
                     ? priorityOrders.add(order) : pendingOrders.add(order);
-        } catch (InterruptedException ex) {
-        }
-        this.semDelivery.release();
+
         return result;
     }
 
@@ -59,20 +54,14 @@ public class Restaurant extends Thread {
         }
     }
 
-    public void makeNextOrder() {
-        try {
-            var nextOrder = this.GetNextOrder();
-            if (nextOrder != null && !nextOrder.customer.membership) {
-                this.semDelivery.acquire();
-                this.lastProducedNonPriorityOrder = Instant.now();
-                this.semRest.release();
-            }
-        } catch (InterruptedException ex) {
-        }
-    }
-
-    @Override
     public void run() {
-        this.makeNextOrder();
-    }
+        
+        while(true){
+            var nextOrder = this.GetNextOrder();
+            if (nextOrder != null){
+                deposito.agregarOrden(nextOrder); 
+                if (!nextOrder.customer.membership)
+                    this.lastProducedNonPriorityOrder = Instant.now();
+            }}
+}
 }
