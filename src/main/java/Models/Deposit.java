@@ -22,8 +22,7 @@ public class Deposit {
     private LinkedList<Order> listaOrdenes = new LinkedList<Order>();
 
     public void agregarOrden(Order order) {
-        try {
-            
+        try {           
                 semRest.acquire();
                 mutex.acquire();
                 listaOrdenes.add(order);

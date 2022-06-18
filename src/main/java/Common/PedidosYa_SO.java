@@ -27,6 +27,6 @@ public class PedidosYa_SO {
         for (int i = 0; i < 12; i++) {
             new Delivery(i, deposito).start();
         }
-        var a = "";
+
     }
 }
