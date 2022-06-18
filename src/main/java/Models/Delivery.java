@@ -9,17 +9,18 @@ package Models;
  * @author Sombra
  */
 public class Delivery extends Thread {
-    
+
     public Deposit deposito;
     public int deliveryId;
-    
-    public Delivery(int deliveryId, Deposit deposito){
+
+    public Delivery(int deliveryId, Deposit deposito) {
         this.deposito = deposito;
         this.deliveryId = deliveryId;
     }
-        @Override
+
+    @Override
     public void run() {
-        while(true){
+        while (true) {
             deposito.despacharOrden(this);
         }
     }

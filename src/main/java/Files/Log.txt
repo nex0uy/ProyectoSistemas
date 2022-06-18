@@ -34,3 +34,15 @@
 17/06/2022 21:36:16 | Executing InitialLoad.loadFile in path: src/main/java/Files/Restaurant_TEST.csv | Reloj: 1
 17/06/2022 21:36:16 | File in path: src/main/java/Files/Restaurant_TEST.csv , loaded successful | Reloj: 1
 17/06/2022 21:36:16 | 2 restaurant loaded successful | Reloj: 1
+18/06/2022 10:56:08 | Executing InitialLoad.LoadRestaurant | Reloj: 1
+18/06/2022 10:56:08 | Executing InitialLoad.LoadOrders | Reloj: 1
+18/06/2022 10:56:08 | Executing InitialLoad.LoadCustomers | Reloj: 1
+18/06/2022 10:56:08 | Executing InitialLoad.loadFile in path: src/main/java/Files/Customers_TEST.csv | Reloj: 1
+18/06/2022 10:56:08 | File in path: src/main/java/Files/Customers_TEST.csv , loaded successful | Reloj: 1
+18/06/2022 10:56:08 | 3 customers loaded successful | Reloj: 1
+18/06/2022 10:56:08 | Executing InitialLoad.loadFile in path: src/main/java/Files/Orders_TEST.csv | Reloj: 1
+18/06/2022 10:56:08 | File in path: src/main/java/Files/Orders_TEST.csv , loaded successful | Reloj: 1
+18/06/2022 10:56:08 | 4 orders loaded successful | Reloj: 1
+18/06/2022 10:56:08 | Executing InitialLoad.loadFile in path: src/main/java/Files/Restaurant_TEST.csv | Reloj: 1
+18/06/2022 10:56:08 | File in path: src/main/java/Files/Restaurant_TEST.csv , loaded successful | Reloj: 1
+18/06/2022 10:56:08 | 2 restaurant loaded successful | Reloj: 1
