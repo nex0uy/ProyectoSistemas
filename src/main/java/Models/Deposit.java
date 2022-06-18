@@ -4,6 +4,7 @@
  */
 package Models;
 
+import Common.Watch;
 import java.util.LinkedList;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
@@ -26,7 +27,7 @@ public class Deposit {
             semRest.acquire();
             mutex.acquire();
             listaOrdenes.add(order);
-            System.out.println("Pedido nro. " + order.orderId + " ha quedado pronto para ser despachado");
+            System.out.println("Pedido nro. " + order.orderId + "del momento "+ order.moment +" ha quedado pronto para ser despachado");
             mutex.release();
 
             Thread.sleep(500);
@@ -40,13 +41,13 @@ public class Deposit {
     }
 
     public void despacharOrden(Delivery delivery) {
-        System.out.println("El delivery " + delivery.deliveryId + " intenta llevar una orden");
+        System.out.println("El delivery " + delivery.deliveryId + " llega al deposito");
         try {
 
             semDelivery.acquire();
             mutex.acquire();
             Order orden = this.listaOrdenes.removeFirst();
-            System.out.println(orden.orderId + "Ha sido retirara por el delivery " + delivery.deliveryId);
+            System.out.println("La orden nro. " + orden.orderId + " del momento "+ orden.moment + " ha sido retirada por el delivery " + delivery.deliveryId + " en el momento " + Watch.getWatch().getCounter());
             mutex.release();
             Thread.sleep(500);
         } catch (InterruptedException ex) {

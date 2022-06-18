@@ -19,16 +19,12 @@ public class Logger {
     private static final Logger logger = new Logger();
     private final String logPath = "src/main/java/Files/Log.txt";
     private final Queue<String> logLines = new LinkedList<String>();
-
-    public Logger() {
-
-    }
-
+    
     public void addLine(String input) {
         synchronized (logLines) {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date date = new Date();
-            logLines.add(dateFormat.format(date) + " | " + input + " | Reloj: " + Watch.getWatch().getWatchCounter() + "\n");
+            logLines.add(dateFormat.format(date) + " | " + input + " | Reloj: " + Watch.getWatch().getCounter() + "\n");
             this.save();
         }
     }

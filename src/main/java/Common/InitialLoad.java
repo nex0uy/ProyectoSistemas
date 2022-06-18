@@ -61,10 +61,9 @@ public class InitialLoad {
      * @param customersPath
      * @return List of restaurants
      */
-    public LinkedList<Restaurant> LoadRestaurant(String restaurantPath, String ordersPath, String customersPath, Deposit deposito) {
+    public LinkedList<Restaurant> LoadRestaurant(String restaurantPath, Deposit deposito) {
         this.logger.addLine(String.format("Executing InitialLoad.LoadRestaurant"));
         try {
-            var orders = LoadOrders(ordersPath, customersPath);
             String[] restaurantLines = loadFile(restaurantPath);
             for (var restaurant : restaurantLines) {
                 var _restaurantLine = restaurant.split(",");
@@ -72,8 +71,6 @@ public class InitialLoad {
                         Integer.parseInt(
                                 _restaurantLine[0]),
                         deposito);
-                orders.stream().filter(ord -> ord.restaurantId == Integer.parseInt(_restaurantLine[0]))
-                        .forEach(ord -> _restaurant.AddNewOrder(ord));
                 restarurants.add(_restaurant);
             }
         } catch (Exception e) {
@@ -106,7 +103,8 @@ public class InitialLoad {
                         Integer.parseInt(_orderLine[0]),
                         _customer,
                         Integer.parseInt(_orderLine[2]),
-                        LocalDateTime.parse(_orderLine[3], formatter));
+                        LocalDateTime.parse(_orderLine[3], formatter),
+                        Integer.parseInt(_orderLine[4]));
                 result.add(_order);
             }
         } catch (Exception e) {

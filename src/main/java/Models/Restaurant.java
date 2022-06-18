@@ -3,7 +3,6 @@ package Models;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
-import java.util.concurrent.Semaphore;
 
 /**
  *
@@ -16,7 +15,7 @@ public class Restaurant extends Thread {
     public LinkedList<Order> priorityOrders;
     int maxTimeInQueue = 3;
     Instant lastProducedNonPriorityOrder;
-    
+
     public Deposit deposito;
 
     public Restaurant(
@@ -30,14 +29,14 @@ public class Restaurant extends Thread {
 
     public Boolean AddNewOrder(Order order) {
         Boolean result = false;
-            result = order.customer.membership
-                    ? priorityOrders.add(order) : pendingOrders.add(order);
+        result = order.customer.membership
+                ? priorityOrders.add(order) : pendingOrders.add(order);
 
         return result;
     }
 
     Order GetNextOrder() {
-                        long minutesElapsed = ChronoUnit.MINUTES.between(this.lastProducedNonPriorityOrder, Instant.now());
+        long minutesElapsed = ChronoUnit.MINUTES.between(this.lastProducedNonPriorityOrder, Instant.now());
         if (this.pendingOrders.size() > 0
                 && minutesElapsed > this.maxTimeInQueue) {
             return this.pendingOrders.removeFirst();
@@ -55,13 +54,15 @@ public class Restaurant extends Thread {
     }
 
     public void run() {
-        
-        while(true){
+
+        while (true) {
             var nextOrder = this.GetNextOrder();
-            if (nextOrder != null){
-                deposito.agregarOrden(nextOrder); 
-                if (!nextOrder.customer.membership)
+            if (nextOrder != null) {
+                deposito.agregarOrden(nextOrder);
+                if (!nextOrder.customer.membership) {
                     this.lastProducedNonPriorityOrder = Instant.now();
-            }}
-}
+                }
+            }
+        }
+    }
 }
